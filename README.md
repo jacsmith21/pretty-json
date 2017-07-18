@@ -6,7 +6,7 @@ Simple library to render/format two JS objects to an HTML view and compare them 
 
 Live Demo 
 --
-This is an [demo](http://jacsmith21.github.com/pretty-json/)  
+You can find the demo [here](http://jacsmith21.github.com/pretty-json/)  
 You can find more valid json [here](http://json.org/example.html)
 
 Dependecies
