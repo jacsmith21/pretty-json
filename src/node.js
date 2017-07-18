@@ -21,9 +21,11 @@ PrettyJSON.view.Node = Backbone.View.extend({
         'mouseout .node-container': 'mouseout'
     },
     initialize:function(opt) {
-	this.options = opt;
+        this.options = opt;
         this.data = this.options.data;
+        this.compareTo = this.options.compareTo
         this.level = this.options.level || this.level;
+        this.compare = this.options.compare || false;
         this.path = this.options.path;
         this.isLast = _.isUndefined(this.options.isLast) ?
             this.isLast : this.options.isLast;
@@ -73,18 +75,29 @@ PrettyJSON.view.Node = Backbone.View.extend({
     },
     renderChilds:function(){
         var count = 1;
+        
         _.each(this.data, function(val, key){
-
+            
+            console.log('DEBUG: key: ' + key + ', val: ' + val);
+            
+            if(this.compare && this.compareTo !== null){
+                var compareToVal = this.compareTo[key];
+            } else {
+                var compareToVal = null;
+            }
+                
             var isLast = (count == this.size);
             count = count + 1;
 
             var path = (this.type == 'array') ? 
                 this.path + '[' + key + ']' :
                 this.path + '.' + key;
-
+            
             var opt = {
                 key: key,
                 data: val,
+                compareTo: compareToVal,
+                compare: this.compare,
                 parent: this,
                 path: path,
                 level: this.level + 1,
@@ -96,21 +109,40 @@ PrettyJSON.view.Node = Backbone.View.extend({
                 new PrettyJSON.view.Node(opt) : 
                 new PrettyJSON.view.Leaf(opt);
 
-            child.on('mouseover',function(e,path){
-                this.trigger("mouseover",e, path);
+            child.on('mouseover', function(e, path){
+                this.trigger("mouseover", e, path);
             }, this);
             child.on('mouseout',function(e){
-                this.trigger("mouseout",e);
+                this.trigger("mouseout", e);
             }, this);
 
             //body ul 
             var li = $('<li/>');
 
-            var colom = '&nbsp;:&nbsp;';
+            var colon = '&nbsp;:&nbsp;';
             var left = $('<span />');
             var right =  $('<span />').append(child.el);
-            (this.type == 'array') ? left.html('') : left.html(key + colom);
-
+            (this.type == 'array') ? left.html('') : left.html(key + colon);
+            
+            if(this.compare){
+                console.log('DEBUG: comparing to: ' + compareToVal);
+                if(compareToVal === val) {
+                    left.attr('class', 'same');
+                } else if(compareToVal === null) {
+                    left.attr('class', 'new');
+                } else if(val === null) {
+                    left.attr('class', 'missing');
+                } else if(typeof val === 'object') {
+                    if (JSON.stringify(val) === JSON.stringify(compareToVal)) {
+                        left.attr('class', 'same');
+                    } else {
+                        left.attr('class', 'different');
+                    }
+                } else {
+                    left.attr('class', 'different');
+                }
+            }
+            
             left.append(right);
             li.append(left);
 

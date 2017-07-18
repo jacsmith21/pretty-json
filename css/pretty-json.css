@@ -47,3 +47,21 @@
 .date{ color:#aa6655;}
 .null{ color:#ff5050;}
 /* eof leaf */
+
+/* comparison colours */
+.new {
+    color: #29c631;
+}
+
+.different {
+    color: #4286f4
+}
+
+.same {
+    color: #000;
+}
+
+.missing {
+    color: #fc3232;
+}
+/* eof comparison colours */
