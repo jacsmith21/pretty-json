@@ -1,14 +1,13 @@
 PRETTY JSON 
 == 
 
-Simple library to render/format a JS obj to an HTML view.
+Simple library to render/format two JS objects to an HTML view and compare them visually. Forked from [warfares/pretty-json](https://github.com/warfares/pretty-json)
 <br/>
-[pretty-json-min.js](http://warfares.github.io/pretty-json/pretty-json-min.js)
 
 Live Demo 
 --
-This is an [live demo](http://warfares.github.com/pretty-json/)
-* ..you could get more valid json input from here (http://json.org/example.html)
+This is an [demo](http://jacsmith21.github.com/pretty-json/)  
+You can find more valid json [here](http://json.org/example.html)
 
 Dependecies
 --
@@ -21,16 +20,25 @@ Usage
 <pre>
 
 //obj to render.
-var obj = {
+var obj1 = {
   name:'John Doe',
   age: 20,
   children:[{name:'Jack', age:5}, {name:'Ann', age:8}],
   wife:{name:'Jane Doe', age:28 }
 }
 
+//obj to compare against
+var obj2 = {
+  name:'John Smith',
+  age: 22,
+  children:[{name:'Jack', age:5}, {name:'Ann', age:8}],
+  wife: null
+}
+
 var node = new PrettyJSON.view.Node({
   el:$('#elem'),
-  data:obj
+  data: obj1
+  compareTo: obj2
 });
 </pre>
 
