@@ -6,7 +6,7 @@ Simple library to render/format two JS objects to an HTML view and compare them 
 
 Live Demo 
 --
-You can find the demo [here](http://jacsmith21.github.com/pretty-json/)  
+You can find the demo [here](http://jacsmith21.github.io/pretty-json/)  
 You can find more valid json [here](http://json.org/example.html)
 
 Dependecies
@@ -38,7 +38,8 @@ var obj2 = {
 var node = new PrettyJSON.view.Node({
   el:$('#elem'),
   data: obj1
-  compareTo: obj2
+  compareTo: obj2,
+  compare: true
 });
 </pre>
 
