@@ -31,6 +31,7 @@ PrettyJSON.view.Node = Backbone.View.extend({
             this.isLast : this.options.isLast;
         this.dateFormat = this.options.dateFormat;
         this.counterpart = this.options.counterpart
+        this.importantKeys = this.options.importantKeys
 
         var m = this.getMeta();
         this.type = m.type;
@@ -105,6 +106,7 @@ PrettyJSON.view.Node = Backbone.View.extend({
                 compare: this.compare,
                 parent: this,
                 path: path,
+                importantKeys: this.importantKeys,
                 level: this.level + 1,
                 dateFormat: this.dateFormat,
                 isLast: isLast
@@ -138,13 +140,17 @@ PrettyJSON.view.Node = Backbone.View.extend({
                     left.attr('class', 'missing');
                 } else if(typeof val === 'object') {
                     if (JSON.stringify(val) === JSON.stringify(compareToVal)) {
-                        left.attr('class', 'same');
+                        left.addClass('same');
                     } else {
-                        left.attr('class', 'different');
+                        left.addClass('different');
                     }
                 } else {
-                    left.attr('class', 'different');
+                    left.addClass('different');
                 }
+            }
+            
+            if(this.importantKeys && this.importantKeys.includes(key)) {
+                left.addClass('important')
             }
             
             left.append(right);

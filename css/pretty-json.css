@@ -59,9 +59,16 @@
 
 .same {
     color: #000;
+    display: none;
 }
 
 .missing {
     color: #fc3232;
 }
 /* eof comparison colours */
+
+/* important color */
+.important {
+    display: block!important;
+}
+/* eof important color*/

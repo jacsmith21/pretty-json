@@ -84,12 +84,13 @@
                 alert('not valid JSON');
                 return;
             }
-
+            
             var node1 = new PrettyJSON.view.Node({ 
                 el:el.result1,
                 data: data1,
                 compareTo: data2,
                 compare: true,
+                importantKeys: ["name"],
                 dateFormat:"DD/MM/YYYY - HH24:MI:SS"
             });
             
