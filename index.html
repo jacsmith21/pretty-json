@@ -85,7 +85,7 @@
                 return;
             }
 
-            var node = new PrettyJSON.view.Node({ 
+            var node1 = new PrettyJSON.view.Node({ 
                 el:el.result1,
                 data: data1,
                 compareTo: data2,
@@ -93,12 +93,13 @@
                 dateFormat:"DD/MM/YYYY - HH24:MI:SS"
             });
             
-            var node = new PrettyJSON.view.Node({ 
+            var node2 = new PrettyJSON.view.Node({ 
                 el:el.result2,
                 data: data2,
                 compareTo: data1,
                 compare: true,
-                dateFormat:"DD/MM/YYYY - HH24:MI:SS"
+                dateFormat:"DD/MM/YYYY - HH24:MI:SS",
+                counterpart: node1
             });
         });
 

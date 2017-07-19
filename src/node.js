@@ -30,6 +30,7 @@ PrettyJSON.view.Node = Backbone.View.extend({
         this.isLast = _.isUndefined(this.options.isLast) ?
             this.isLast : this.options.isLast;
         this.dateFormat = this.options.dateFormat;
+        this.counterpart = this.options.counterpart
 
         var m = this.getMeta();
         this.type = m.type;
@@ -42,6 +43,12 @@ PrettyJSON.view.Node = Backbone.View.extend({
         //Render first level.
         if (this.level == 1)
             this.show();
+            if(this.counterpart !== undefined){
+                for(var i = 0; i < this.childs.length; i++) {
+                    this.childs[i].counterpart = this.counterpart.childs[i]
+                    this.counterpart.childs[i].counterpart = this.childs[i]
+                }
+            }
 
     },
     getMeta: function(){
@@ -77,8 +84,6 @@ PrettyJSON.view.Node = Backbone.View.extend({
         var count = 1;
         
         _.each(this.data, function(val, key){
-            
-            console.log('DEBUG: key: ' + key + ', val: ' + val);
             
             if(this.compare && this.compareTo !== null){
                 var compareToVal = this.compareTo[key];
@@ -125,7 +130,6 @@ PrettyJSON.view.Node = Backbone.View.extend({
             (this.type == 'array') ? left.html('') : left.html(key + colon);
             
             if(this.compare){
-                console.log('DEBUG: comparing to: ' + compareToVal);
                 if(compareToVal === val) {
                     left.attr('class', 'same');
                 } else if(compareToVal === null) {
@@ -160,7 +164,26 @@ PrettyJSON.view.Node = Backbone.View.extend({
     },
     collapse:function(e){
         e.stopPropagation();
-        this.isVisible() ? this.hide() : this.show();
+        if(this.isVisible()) {
+            this.hide();
+            if(this.counterpart !== undefined && this.counterpart.data !== null){
+                this.counterpart.hide();
+            }
+        } else {
+            this.show();
+            if(this.counterpart !== undefined && this.counterpart.data !== null){
+                
+                if(!this.counterpart.rendered){
+                    this.counterpart.renderChilds();
+                    this.counterpart.rendered = true
+                }
+                for(var i = 0; i < this.childs.length; i++) {
+                    this.childs[i].counterpart = this.counterpart.childs[i]
+                    this.counterpart.childs[i].counterpart = this.childs[i]
+                }
+                this.counterpart.show();
+            }
+        }
         this.trigger("collapse",e);
     },
     show: function(){
@@ -228,5 +251,5 @@ PrettyJSON.view.Node = Backbone.View.extend({
 
         if(this.level != 1)
             this.hide();
-    }
+    },
 });
