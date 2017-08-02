@@ -1,4 +1,4 @@
-PRETTY JSON 
+Pretty JSON
 == 
 
 Simple library to render/format two JS objects to an HTML view and compare them visually. Forked from [warfares/pretty-json](https://github.com/warfares/pretty-json)
@@ -17,7 +17,7 @@ Dependecies
 
 Usage
 --
-<pre>
+```
 
 //obj to render.
 var obj1 = {
@@ -35,19 +35,31 @@ var obj2 = {
   wife: null
 }
 
-var node = new PrettyJSON.view.Node({
-  el:$('#elem'),
+//Passing in obj2 allows the renderer to add "different", "same", "new" & "missing" class tags
+var node1 = new PrettyJSON.view.Node({
+  el:$('#elem1'),
+  data: obj1
+  compareTo: obj2
+});
+
+//If you render two json objects you can "link" them using the counterpart property
+var node2 = new PrettyJSON.view.Node({
+  el:$('#elem2'),
   data: obj1
   compareTo: obj2,
-  compare: true
+  counterpart: node1
 });
-</pre>
+```
 
 Properties.
 --
 <b>el</b>: DOM elem to append the JSON-HTML view.
 <br/>
 <b>data</b>: the JSON data.
+<br/>
+<b>compareTo</b>: the JSON data to compare against.
+<br/>
+<b>counterpart</b>: another Node object to link to (so they open/close at the same time)
 <br/>
 <b>dateFormat</b>: <em>(optional)</em> format date, ex: "DD/MM/YYYY HH24:MI:SS". 
   - YYYY : year
