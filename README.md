@@ -4,10 +4,9 @@ Pretty JSON
 Simple library to render/format two JS objects to an HTML view and compare them visually. Forked from [warfares/pretty-json](https://github.com/warfares/pretty-json)
 <br/>
 
-Live Demo 
---
-You can find the demo [here](http://jacsmith21.github.io/pretty-json/)  
-You can find more valid json [here](http://json.org/example.html)
+Here is a [demo](https://jacsmith21.github.io/pretty-json/)!
+
+Download it [here](https://raw.githubusercontent.com/jacsmith21/pretty-json/master/build/pretty-json-min.js)!
 
 Dependecies
 --
@@ -91,3 +90,11 @@ Node
 
 * Note: "node" is an Obj or an Array.
 * Note : only tested in Chrome & FireFox.
+
+## Testing
+
+Mocha and Chai are used to test this library. To run the tests:
+
+1. Install the dependencies: `$ npm install jquery jsdom underscore backbone mocha chai sinon sinon-chai testem -g`
+2. Run testem: `$ testem`
+3. Go to the webpage!
