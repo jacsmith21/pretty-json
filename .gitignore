@@ -5,3 +5,5 @@ bower_components
 .project
 
 *.pyc
+
+node_modules
