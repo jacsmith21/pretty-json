@@ -91,6 +91,13 @@ Node
 * Note: "node" is an Obj or an Array.
 * Note : only tested in Chrome & FireFox.
 
+## Building
+The library is built using python with jsmin. To build the comprssed file:
+
+1. Go to the build folder
+2. `$ pip install -r requirements.txt`
+3. Run build.py using python 3
+
 ## Testing
 
 Mocha and Chai are used to test this library. To run the tests:
