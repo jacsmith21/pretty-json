@@ -1,0 +1,2 @@
+colorshell==0.1.1
+jsmin==2.2.2
