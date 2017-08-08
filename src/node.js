@@ -7,14 +7,15 @@
 *
 */
 PrettyJSON.view.Node = Backbone.View.extend({
-    tagName:'span',
-    data:null,
-    level:1,
-    path:'',
-    type:'',
-    size:0,
-    isLast:true,
-    rendered:false,
+    tagName: 'span',
+    data: null,
+    level: 1,
+    path: '',
+    type: '',
+    size: 0,
+    isLast: true,
+    rendered: false,
+    linked: false,
     events:{
         'click .node-bracket': 'collapse',
         'mouseover .node-container': 'mouseover',
@@ -25,10 +26,10 @@ PrettyJSON.view.Node = Backbone.View.extend({
         this.data = this.options.data;
         this.compareTo = this.options.compareTo
         this.level = this.options.level || this.level;
-        this.compare = this.options.compare || false;
         this.path = this.options.path;
         this.isLast = _.isUndefined(this.options.isLast) ?
             this.isLast : this.options.isLast;
+        this.compare = opt.compare || false;
         this.dateFormat = this.options.dateFormat;
         this.counterpart = this.options.counterpart
         this.importantInfo = this.options.importantInfo
@@ -42,14 +43,11 @@ PrettyJSON.view.Node = Backbone.View.extend({
         this.render();
 
         //Render first level.
-        if (this.level == 1)
+        if (this.level == 1) {
+        	this.compare = this.compareTo ? true : false;
+        	if(this.counterpart && this instanceof PrettyJSON.view.Node) this.counterpart.counterpart = this;
             this.show();
-            if(this.counterpart !== undefined){
-                for(var i = 0; i < this.childs.length; i++) {
-                    this.childs[i].counterpart = this.counterpart.childs[i]
-                    this.counterpart.childs[i].counterpart = this.childs[i]
-                }
-            }
+        }
 
     },
     getMeta: function(){
@@ -172,44 +170,57 @@ PrettyJSON.view.Node = Backbone.View.extend({
         e.stopPropagation();
         if(this.isVisible()) {
             this.hide();
-            if(this.counterpart !== undefined && this.counterpart.data !== null){
-                this.counterpart.hide();
-            }
         } else {
             this.show();
-            if(this.counterpart !== undefined && this.counterpart.data !== null){
-                
-                if(!this.counterpart.rendered){
-                    this.counterpart.renderChilds();
-                    this.counterpart.rendered = true
-                }
-                for(var i = 0; i < this.childs.length; i++) {
-                    this.childs[i].counterpart = this.counterpart.childs[i]
-                    this.counterpart.childs[i].counterpart = this.childs[i]
-                }
-                this.counterpart.show();
-            }
         }
-        this.trigger("collapse",e);
+        this.trigger("collapse", e);
     },
     show: function(){
 
         //lazy render ..
-        if(!this.rendered){
+        if(!this.rendered) {
             this.renderChilds();
             this.rendered = true;
+        }
+        
+        if(this.counterpart && this.counterpart.data && !this.counterpart.rendered) {
+            this.counterpart.renderChilds();
+            this.counterpart.rendered = true;
+        }
+        
+        if(this.counterpart && !this.linked) {
+        	for(var i = 0; i < this.childs.length; i++) {
+            	if(this.childs[i] instanceof PrettyJSON.view.Node && this.counterpart.childs[i] instanceof PrettyJSON.view.Node) {
+            		this.childs[i].counterpart = this.counterpart.childs[i]
+                    this.counterpart.childs[i].counterpart = this.childs[i]
+            	}
+            }
+        	this.linked = true;
+        	this.counterpart.linked = true;
         }
 
         this.els.top.html(this.getBrackets().top);
         this.els.contentWrapper.show();
         this.els.down.show();
+        
+        if(this.counterpart) {
+        	this.counterpart.els.top.html(this.counterpart.getBrackets().top);
+        	this.counterpart.els.contentWrapper.show();
+        	this.counterpart.els.down.show();
+        }
     },
     hide: function(){
         var b = this.getBrackets();
-
         this.els.top.html(b.close);
         this.els.contentWrapper.hide();
         this.els.down.hide();
+        
+        if(this.counterpart) {
+        	b = this.getBrackets();
+            this.counterpart.els.top.html(b.close);
+            this.counterpart.els.contentWrapper.hide();
+            this.counterpart.els.down.hide();
+        }
     },
     getBrackets:function(){
         var v = {
@@ -245,6 +256,7 @@ PrettyJSON.view.Node = Backbone.View.extend({
                 child.expandAll();
             }
         },this);
+        
         this.show();
     },
     collapseAll:function(){
@@ -257,5 +269,5 @@ PrettyJSON.view.Node = Backbone.View.extend({
 
         if(this.level != 1)
             this.hide();
-    },
+    }
 });
