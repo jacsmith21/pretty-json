@@ -95,6 +95,6 @@ Node
 
 Mocha and Chai are used to test this library. To run the tests:
 
-1. Install the dependencies: `$ npm install jquery jsdom underscore backbone mocha chai sinon sinon-chai testem -g`
+1. Install the dependencies: `$ npm install jquery jsdom underscore backbone mocha chai sinon sinon-chai testem`
 2. Run testem: `$ testem`
 3. Go to the webpage!
