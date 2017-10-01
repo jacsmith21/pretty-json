@@ -3,6 +3,7 @@
     <title>sample</title>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Quicksand" />
     <link rel="stylesheet" type="text/css" href="css/pretty-json.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 
     <!-- lib -->
     <script type="text/javascript" src="lib/jquery-1.11.1.min.js" ></script>
@@ -24,14 +25,13 @@
     <!-- just css for this page example -->
     <style type="text/css">
         body{
-            width:700px;
             border-style: none;
             margin-left: auto;
             margin-right: auto;
         }
 
         textarea{
-            width:600px;
+            width:100%;
             padding:4px 7px;
             border:1px solid #ccc;
             border-radius:4px;
@@ -110,17 +110,44 @@
         });
     });
 </script>
-<h1>Demo</h1>
-<textarea id="input1" rows="12"></textarea>
-<br/>
-<textarea id="input2" rows="12"></textarea>
-<br/>
-<button id="action">go</button>
-<button id="clear">clear</button>
-<br/>
-<br/>
-<span id="result1"></span>
-<br/>
-<span id="result2"></span>
+
+<div class="container">
+    <br/>
+
+    <div class="row">
+        <div class="col text-center">
+            <h1>Demo 1</h1>
+        </div>
+    </div>
+
+    <br/>
+    
+    <div class="row">
+        <div class="col">
+        <textarea id="input1" rows="12"></textarea>
+        </div>
+        <div class="col">
+        <textarea id="input2" rows="12"></textarea>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button id="action">go</button>
+            <button id="clear">clear</button>
+            <br/>
+            <br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <span id="result1"></span>
+        </div>
+        <div class="col">
+            <span id="result2"></span>
+        </div>
+    </div>
+</div>
 </body>
 </html>

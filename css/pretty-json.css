@@ -40,11 +40,11 @@
     height:100%;
 }
 
-.title{ color:#ccc;}
-.string{ color:#080;}
-.number{ color:#ccaa00;}
+.title{ color:#000;}
+.string{ color:#000;}
+.number{ color:#000;}
 .boolean{ color:#1979d3;}
-.date{ color:#aa6655;}
+.date{ color:#000;}
 .null{ color:#ff5050;}
 /* eof leaf */
 
